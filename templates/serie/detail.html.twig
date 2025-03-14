@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Detail of {{ serie.name }} !</h1>
+
+    <section>
+        <article class="serie-details">
+            <div>
+                <img src="{{ asset('img/posters/series/' ~ serie.poster) }}" alt=" {{ serie.name }}">
+            </div>
+
+            <div class="serie-details-infos">
+                <div>{{ serie.name }}</div>
+                <div>{{ serie.genres }}</div>
+                <div>Users rating : {{ serie.vote }}</div>
+                <div>Serie status : {{ serie.status }}</div>
+                <div>Aired from {{ serie.firstAirDate | date('Y-m-d') }}
+                    to {{ serie.lastAirDate | date('Y-m-d') }}</div>
+                <div>{{ serie.overview | nl2br }}</div>
+            </div>
+        </article>
+    </section>
+
+
+{% endblock %}
+
+{% block title %}
+    {{ parent() }} | Detail
+{% endblock %}
+
+{% block extraStyle %}
+    <style>
+        body {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.3)),
+            url("{{ asset('img/backdrops/' ~ serie.backdrop) }}");
+        }
+    </style>
+{% endblock %}
+

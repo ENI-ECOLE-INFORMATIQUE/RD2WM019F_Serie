@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+{#    <h1>Welcome in Series {{ name | raw }} !</h1>#}
+        <h1>Welcome in Series {{ name | striptags }} !</h1>
+
+
+    <div>
+        {{ serie.name }} : {{ serie.year }}
+    </div>
+{% endblock %}
+
+{% block title %}
+    {{ parent() }} | Home
+{% endblock %}

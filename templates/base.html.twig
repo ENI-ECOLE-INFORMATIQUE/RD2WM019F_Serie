@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Series {% endblock %}</title>
+    <link rel="icon" href="{{ asset("img/icon.png") }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Parkinsans:wght@300..800&display=swap" rel="stylesheet">
+
+    {#    <link rel="stylesheet" href="{{ asset('styles/app.css') }}"> #}
+
+    {% block javascripts %}
+        {% block importmap %}{{ importmap('app') }}{% endblock %}
+    {% endblock %}
+</head>
+
+<body>
+
+<div class="container">
+    <header>
+        <img src="{{ asset('img/logo.svg') }}" alt="Series">
+        {% include 'menu/nav.html.twig' %}
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="flash flash-{{ label }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+    </header>
+    <main>
+        {% block body %}{% endblock %}
+    </main>
+    <footer>
+        {% include 'menu/nav.html.twig' %}
+    </footer>
+</div>
+
+{% block extraStyle %}{% endblock %}
+</body>
+</html>

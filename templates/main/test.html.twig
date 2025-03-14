@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ parent() }} | Test
+{% endblock %}
+
+{% block body %}
+    <h1>Welcome to TEST !</h1>
+
+    {# Création d'une variable #}
+    {% set name = "Sylvain" %}
+    <h2>Hello {{ name }}</h2>
+
+    {# Création d'un tableau #}
+    {% set colors = ['blue', 'pink', 'yellow', 'green'] %}
+
+    {% for color in colors %}
+        {% if loop.first and color == 'blue' %}
+            <div>Première couleur</div>
+        {% endif %}
+        {% if loop.last %}
+            <div>Dernière couleur</div>
+        {% endif %}
+        {# index + 1, index0 + 0 #}
+        <div style="background-color: {{ color }}">{{ color }} / {{ loop.index0 }}</div>
+    {% else %}
+        <div>Aucune couleur</div>
+    {% endfor %}
+
+    {% for i in 1..10 %}
+        <span>{{ i }}</span>
+    {% endfor %}
+    <br>
+
+    {% for i in 'a'..'z' %}
+        <span>{{ i }}</span>
+    {% endfor %}
+
+    {% set serie = {
+        name : 'Arcane',
+        year : 2024,
+        director : 'Riot games'
+    } %}
+
+    <h3>{{ serie.name }}</h3>
+    <h3>{{ serie.year }}</h3>
+
+    {% for key, val in serie %}
+        <div>{{ key }} : {{ val }}</div>
+    {% endfor %}
+
+    {#  des filtres #}
+
+    <h2>Quelques filtres</h2>
+
+    <div>{{ name | upper }} : {{ name | length }}</div>
+    <div>
+        {{ colors | join("-") | length }}
+    </div>
+
+    <div>
+        {{ "now" | date("Y-m-d") }}
+    </div>
+
+
+    {#    {% embed 'test/embed.html.twig' %} #}
+    {#        {% block hello %} #}
+    {#            {{ parent() }} Sylvain #}
+    {#        {% endblock %} #}
+    {#    {% endembed %} #}
+
+    {% embed 'test/embed.html.twig' with {"name" : name} %}
+
+    {% endembed %}
+
+{% endblock %}
+
