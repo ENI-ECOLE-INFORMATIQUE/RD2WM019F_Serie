@@ -18,8 +18,11 @@
                     to {{ serie.lastAirDate | date('Y-m-d') }}</div>
                 <div>{{ serie.overview | nl2br }}</div>
             </div>
-            <a class="link_button" href="{{ path('series_update', {'id': serie.id}) }}">Update</a>
-            <a class="link_button" href="{{ path('season_add', {'serieId': serie.id}) }}">Add a season</a>
+            <div>
+                <a class="link_button" href="{{ path('series_update', {'id': serie.id}) }}">Update</a>
+                <a onclick="return confirm('T\'es sur ma gueule ?')" class="link_button" href="{{ path('series_delete', {'id': serie.id}) }}">Delete</a>
+                <a class="link_button" href="{{ path('season_add', {'serieId': serie.id}) }}">Add a season</a>
+            </div>
         </article>
 
         <div class="seasons">

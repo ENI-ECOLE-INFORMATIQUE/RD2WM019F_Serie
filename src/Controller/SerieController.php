@@ -118,5 +118,20 @@ class SerieController extends AbstractController
         ]);
     }
 
+    #[Route('/delete/{id}', name: 'delete', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
+    public function delete(
+        Serie                  $serie,
+        EntityManagerInterface $entityManager
+    ): Response
+    {
+
+        $entityManager->remove($serie);
+        $entityManager->flush();
+
+        $this->addFlash("success", "Serie deleted !");
+
+        return $this->redirectToRoute("series_list");
+    }
+
 
 }
