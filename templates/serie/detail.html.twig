@@ -2,7 +2,7 @@
 
 {% block body %}
     <h1>Detail of {{ serie.name }} !</h1>
-    <a href="{{ path('series_update', {'id': serie.id}) }}">Update</a>
+
     <section>
         <article class="serie-details">
             <div>
@@ -18,7 +18,28 @@
                     to {{ serie.lastAirDate | date('Y-m-d') }}</div>
                 <div>{{ serie.overview | nl2br }}</div>
             </div>
+            <a class="link_button" href="{{ path('series_update', {'id': serie.id}) }}">Update</a>
+            <a class="link_button" href="{{ path('season_add', {'serieId': serie.id}) }}">Add a season</a>
         </article>
+
+        <div class="seasons">
+            {% for season in serie.seasons %}
+                <article>
+                    <div>
+                        <img src="{{ asset('img/posters/seasons/' ~ season.poster) }}"
+                             alt="{{ serie.name }} #{{ season.number }}">
+                    </div>
+                    <div>
+                        <div>#{{ season.number }}</div>
+                        <div>Aired from {{ season.firstAirDate | date('Y-m-d') }}</div>
+                        <div>{{ season.overview | nl2br }}</div>
+                    </div>
+                </article>
+
+            {% endfor %}
+        </div>
+
+
     </section>
 
 
