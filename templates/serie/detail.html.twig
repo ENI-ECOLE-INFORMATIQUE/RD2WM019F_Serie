@@ -2,7 +2,7 @@
 
 {% block body %}
     <h1>Detail of {{ serie.name }} !</h1>
-
+    <a href="{{ path('series_update', {'id': serie.id}) }}">Update</a>
     <section>
         <article class="serie-details">
             <div>
