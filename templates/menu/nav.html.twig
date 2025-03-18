@@ -1,12 +1,20 @@
 <nav>
     <ul>
-        <li><a href="{{ path('main_home') }}">Home</a></li>
-        <li><a href="{{ path('main_test') }}">Test</a></li>
-        <li><a href="{{ path('series_list') }}">All TV Show</a></li>
-        <li><a href="{{ path('series_add')}}">Add a new TV Show</a></li>
-        <li><a href="{{ path('season_add')}}">Add a new Season</a></li>
-        <li><a href="{{ path('app_login')}}">Sign in</a></li>
-        <li><a href="{{ path('app_logout')}}">Sign out</a></li>
-        <li><a href="{{ path('app_register')}}">Register</a></li>
+        {% if app.user %}
+            <li><a href="{{ path('main_home') }}">Home</a></li>
+            <li><a href="{{ path('main_test') }}">Test</a></li>
+            <li><a href="{{ path('series_list') }}">All TV Show</a></li>
+            <li><a href="{{ path('series_add') }}">Add a new TV Show</a></li>
+            <li><a href="{{ path('season_add') }}">Add a new Season</a></li>
+            <li><a href="{{ path('app_logout') }}">Sign out ({{ app.user.firstname }})</a></li>
+            {% if is_granted("ROLE_ADMIN") %}
+                <li><a href="{{ path('admin_dashboard') }}">Dashboard</a></li>
+            {% endif %}
+        {% else %}
+            <li><a href="{{ path('app_login') }}">Sign in</a></li>
+            <li><a href="{{ path('app_register') }}">Register</a></li>
+        {% endif %}
+
+
     </ul>
 </nav>
