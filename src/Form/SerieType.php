@@ -72,7 +72,17 @@ class SerieType extends AbstractType
                     )
                 ]
             ])
-            ->add('poster')
+            ->add('poster', FileType::class, [
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new Image(
+                        maxSize: '5M',
+                        maxSizeMessage: "C'est trop gros !",
+                        mimeTypesMessage: "Format non valide !"
+                    )
+                ]
+            ])
             ->add('tmdbId');
     }
 

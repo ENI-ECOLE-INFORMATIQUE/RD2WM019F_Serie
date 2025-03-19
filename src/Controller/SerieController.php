@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Serie;
 use App\Form\SerieType;
 use App\Repository\SerieRepository;
+use App\Services\Uploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -66,7 +67,8 @@ class SerieController extends AbstractController
     #[Route('/add', name: 'add', methods: ['GET', 'POST'])]
     public function add(
         Request                $request,
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+        Uploader               $uploader
     ): Response
     {
         $serie = new Serie();
@@ -80,9 +82,13 @@ class SerieController extends AbstractController
              * @var UploadedFile $backdrop
              */
             $backdrop = $serieForm->get('backdrop')->getData();
-            $newFileName = $serie->getName() . '-' . uniqid() . '.' . $backdrop->guessExtension();
-            $backdrop->move($this->getParameter("serie_backdrop_dir"), $newFileName);
-            $serie->setBackdrop($newFileName);
+            $serie->setBackdrop(
+                $uploader->save($backdrop, $serie->getName(), $this->getParameter('serie_backdrop_dir'))
+            );
+            $poster = $serieForm->get('poster')->getData();
+            $serie->setPoster(
+                $uploader->save($poster, $serie->getName(), $this->getParameter('serie_poster_dir'))
+            );
 
             $entityManager->persist($serie);
             $entityManager->flush();
