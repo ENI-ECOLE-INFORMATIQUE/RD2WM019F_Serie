@@ -1,5 +1,36 @@
 {% extends 'base.html.twig' %}
 
+
+{% block extraJs %}
+    <script>
+        const button = document.getElementById('btn-like')
+        button.addEventListener('click', function () {
+            let url = '{{ path("api_serie_update", {"id": serie.id }) }}'
+
+            let data = {nbLike: 1};
+
+            fetch(url, {method: 'PUT', body: JSON.stringify(data)})
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('nbLike').innerText = data.nbLike
+                })
+        })
+
+        document.getElementById('btn-dislike').addEventListener('click', function () {
+            let url = '{{ path("api_serie_update", {"id": serie.id }) }}'
+
+            let data = {nbLike: -1};
+
+            fetch(url, {method: 'PUT', body: JSON.stringify(data)})
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('nbLike').innerText = data.nbLike
+                })
+        })
+
+    </script>
+{% endblock %}
+
 {% block body %}
     <h1>Detail of {{ serie.name }} !</h1>
 
@@ -16,8 +47,10 @@
                        href="{{ path('series_delete', {'id': serie.id}) }}">Delete</a>
                     <a class="link_button" href="{{ path('season_add', {'serieId': serie.id}) }}">Add a season</a>
                 </div>
-                <div>{{ serie.name }}
-
+                <div>{{ serie.name }}</div>
+                <div>Likes = <span id="nbLike">{{ serie.nbLike }}</span>
+                    <button id="btn-like">&hearts;</button>
+                    <button id="btn-dislike">&downdownarrows;</button>
                 </div>
                 <div>{{ serie.genres }}</div>
                 <div>Users rating : {{ serie.vote }}</div>

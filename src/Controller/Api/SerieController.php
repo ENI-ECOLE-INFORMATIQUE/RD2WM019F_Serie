@@ -46,7 +46,7 @@ class SerieController extends AbstractController
 
         //vérifier les données
         $errors = $validator->validate($serie);
-        if(count($errors) > 0){
+        if (count($errors) > 0) {
             return $this->json($errors, Response::HTTP_BAD_REQUEST);
         }
 
@@ -70,9 +70,20 @@ class SerieController extends AbstractController
     }
 
     #[Route('/api/serie/{id}', name: 'api_serie_update', methods: ['PUT', 'PATCH'])]
-    public function update(): Response
+    public function update(
+        Serie                  $serie,
+        EntityManagerInterface $entityManager,
+        Request                $request
+    ): Response
     {
+        $data = $request->getContent();
+        $data = json_decode($data);
 
+        $serie->setNbLike($serie->getNbLike() + $data->nbLike);
+        $entityManager->persist($serie);
+        $entityManager->flush();
+
+        return $this->json(["nbLike" => $serie->getNbLike()], Response::HTTP_OK);
     }
 
     #[Route('/api/serie/{id}', name: 'api_serie_delete', methods: ['DELETE'])]

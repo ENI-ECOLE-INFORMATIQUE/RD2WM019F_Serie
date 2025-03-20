@@ -42,7 +42,7 @@ class MainController extends AbstractController
         //dd(json_decode($content));
         $lorems = $serializer->deserialize($content, Lorem::class.'[]', 'json');
 
-        dd($lorems);
+//        dd($lorems);
 
 
         return $this->render('main/test.html.twig', [
