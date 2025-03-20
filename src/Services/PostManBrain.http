@@ -3,3 +3,19 @@ GET https://jsonplaceholder.typicode.com/todos/
 
 ###
 DELETE http://localhost:81/series19/public/api/serie/124
+
+###
+POST http://localhost:81/series19/public/api/serie
+Content-Type: application/json
+
+{
+  "name": "Buffy le retour",
+  "status": "michel",
+  "vote": "10",
+  "genres": "Fantastic",
+  "firstAirDate": "2025-02-01",
+  "backdrop": "backdrop.png",
+  "poster": "poster.png",
+  "tmdbId": 123,
+  "popularity": "1000"
+}
