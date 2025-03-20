@@ -62,6 +62,10 @@
         {{ "now" | date("Y-m-d") }}
     </div>
 
+    {% for lor in lorems %}
+        <p>{{ lor.title }}</p>
+    {% endfor %}
+
 
     {#    {% embed 'test/embed.html.twig' %} #}
     {#        {% block hello %} #}

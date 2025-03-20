@@ -1,0 +1,5 @@
+### GET request to example server
+GET https://jsonplaceholder.typicode.com/todos/
+
+###
+DELETE http://localhost:81/series19/public/api/serie/124

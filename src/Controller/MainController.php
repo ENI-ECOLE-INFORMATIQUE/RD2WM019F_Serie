@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Models\Lorem;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class MainController extends AbstractController
 {
@@ -25,8 +27,26 @@ class MainController extends AbstractController
     }
 
     #[Route('/test', name: 'main_test')]
-    public function test(): Response
+    public function test(
+        SerializerInterface $serializer
+    ): Response
     {
-        return $this->render('main/test.html.twig');
+        //envoie de donnée
+//        $ch = curl_init("https://jsonplaceholder.typicode.com/todos/");
+//        curl_setopt($ch, CURLOPT_URL, "https://www.analyse-innovation-solution-fr/404");
+//        curl_setopt($ch, CURLOPT_POST, true);
+//        curl_exec($ch);
+
+        //récupération
+        $content = file_get_contents("https://jsonplaceholder.typicode.com/todos/");
+        //dd(json_decode($content));
+        $lorems = $serializer->deserialize($content, Lorem::class.'[]', 'json');
+
+        dd($lorems);
+
+
+        return $this->render('main/test.html.twig', [
+            'lorems' => $lorems
+        ]);
     }
 }

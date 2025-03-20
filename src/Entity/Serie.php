@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\HasLifecycleCallbacks]
@@ -18,19 +19,23 @@ class Serie
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups('get_serie')]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "Please enter a name for the TV Show !")]
     #[Assert\Length(max : 255, maxMessage: "Max {{ limit }} characters")]
+    #[Groups('get_serie')]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[Assert\Length(min: 2, minMessage: "Min {{ limit }} characters or nothing !")]
+    #[Groups('get_serie')]
     private ?string $overview = null;
 
     #[ORM\Column(length: 50)]
     #[Assert\Choice(choices: ['ended', 'returning', 'canceled'])]
+    #[Groups('get_serie')]
     private ?string $status = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 3, scale: 1)]
@@ -41,6 +46,7 @@ class Serie
     private ?string $popularity = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups('get_serie')]
     private ?string $genres = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
@@ -70,6 +76,7 @@ class Serie
      * @var Collection<int, Season>
      */
     #[ORM\OneToMany(targetEntity: Season::class, mappedBy: 'serie', cascade: ['remove'], orphanRemoval: false)]
+    #[Groups('get_serie')]
     private Collection $seasons;
 
     public function __construct()
