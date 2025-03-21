@@ -49,14 +49,14 @@ class SerieController extends AbstractController
     //paramConverter implicite
         //le paramètre est converti automatiquement en instance de série
         // à utiliser maintenant MapEntity
-    public function detail(/*#[MapEntity(mapping: ['id' => 'id'])]*/ Serie $serie): Response
+    public function detail(/*#[MapEntity(mapping: ['id' => 'id'])]*/ int $id, SerieRepository $serieRepository): Response
     {
 
-//        $serie = $serieRepository->find($id);
-//
-//        if(!$serie){
-//            throw $this->createNotFoundException("Oops ! Serie not found !");
-//        }
+        $serie = $serieRepository->find($id);
+
+        if (!$serie) {
+            throw $this->createNotFoundException("Oops ! Serie not found !");
+        }
 
         //TODO renvoyer une série spécifique
         return $this->render('serie/detail.html.twig', [
